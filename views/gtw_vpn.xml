@@ -1,0 +1,78 @@
+<odoo>
+  <data>
+    
+    <!-- List -->
+    <record model="ir.ui.view" id="gtw_vpn_list">
+      <field name="name">VPNs</field>
+      <field name="model">gtw.vpn</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id_gtw_subdominio" attrs="{'readonly':[('id','!=',False)]}"/>
+          <field name="descricao"/>
+          <field name="nome_client_vpn" readonly="1"/>
+          <field name="ip_vpn" readonly="1"/>
+          <button name="download_vpn_file" type="object" class="oe_highlight btn btn-primary" icon="fa-download"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Form -->
+    <record model="ir.ui.view" id="gtw_vpn_form">
+      <field name="name">VPNs</field>
+      <field name="model">gtw.vpn</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="id_gtw_subdominio"/>
+                <field name="nome_client_vpn" readonly="1"/>
+              </group>
+              <group>
+                <field name="descricao"/>
+                <field name="ip_vpn" readonly="1"/>
+              </group>              
+            </group>
+            <notebook>
+              <page string="VPNs">
+                <field name="id_gtw_rota" context="{
+                  'default_id_gtw_subdominio':id_gtw_subdominio,
+                  'default_id_gtw_vpn':id
+                }">
+                  <tree editable="bottom">
+                    <field name="id_gtw_subdominio"/>
+                    <field name="porta_origem_inicial"/>
+                    <field name="porta_origem_final"/>
+                    <field name="porta_destino_inicial"/>
+                    <field name="porta_destino_final"/>
+                    <field name="descricao"/>
+                    <field name="modo_nginx"/>
+                    <field name="id_gtw_vpn"/>
+                    <button name="open_record" type="object" class="text-dark" icon="fa-align-justify"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="gtw_vpn_action">
+      <field name="name">VPNs</field>
+      <field name="res_model">gtw.vpn</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- menu categories -->
+
+    <menuitem name="VPNs" id="sismais_gateway_manager.menu_4" parent="sismais_gateway_manager.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Listar" id="sismais_gateway_manager.menu_4_list" parent="sismais_gateway_manager.menu_4"
+              action="gtw_vpn_action"/>
+
+  </data>
+</odoo>

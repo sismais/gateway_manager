@@ -1,0 +1,34 @@
+<odoo>
+  <data>
+    
+    <!-- List -->
+    <record model="ir.ui.view" id="gtw_api_list">
+      <field name="name">Parâmetros API</field>
+      <field name="model">gtw.api</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <field name="url"/>
+          <field name="usuario"/>
+          <field name="senha" password="True"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="gtw_api_action">
+      <field name="name">Parâmetros API</field>
+      <field name="res_model">gtw.api</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- menu categories -->
+
+    <menuitem name="Parâmetros API" id="sismais_gateway_manager.menu_6" parent="sismais_gateway_manager.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Listar" id="sismais_gateway_manager.menu_6_list" parent="sismais_gateway_manager.menu_6"
+              action="gtw_api_action"/>
+
+  </data>
+</odoo>

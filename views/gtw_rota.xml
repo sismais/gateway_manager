@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    
+    <!-- List -->
+    <record model="ir.ui.view" id="gtw_rota_list">
+      <field name="name">Rotas</field>
+      <field name="model">gtw.rota</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id_gtw_subdominio"/>
+          <field name="porta_origem_inicial"/>
+          <field name="porta_origem_final"/>
+          <field name="porta_destino_inicial"/>
+          <field name="porta_destino_final"/>
+          <field name="descricao"/>
+          <field name="modo_nginx"/>
+          <field name="id_gtw_vpn"/>
+          <button name="open_record" type="object" class="oe_highlight btn btn-primary" icon="fa-align-justify"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Form -->
+    <record model="ir.ui.view" id="gtw_rota_form">
+      <field name="name">Rotas</field>
+      <field name="model">gtw.rota</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="id_gtw_subdominio" attrs="{'readonly':[('id','!=',False)]}"/>
+                <field name="porta_origem_inicial"/>
+                <field name="porta_destino_inicial"/>
+                <field name="descricao"/>
+              </group>
+              <group>
+                <field name="id_gtw_vpn" attrs="{'readonly':[('id','!=',False)]}"/>
+                <field name="porta_origem_final"/>
+                <field name="porta_destino_final"/>
+                <field name="modo_nginx"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="gtw_rota_action">
+      <field name="name">Rotas</field>
+      <field name="res_model">gtw.rota</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- menu categories -->
+    <menuitem name="Rotas" id="sismais_gateway_manager.menu_5" parent="sismais_gateway_manager.menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="Listar" id="sismais_gateway_manager.menu_5_list" parent="sismais_gateway_manager.menu_5"
+              action="gtw_rota_action"/>
+
+  </data>
+</odoo>

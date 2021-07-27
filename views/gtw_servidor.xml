@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    
+    <!-- List -->
+    <record model="ir.ui.view" id="gtw_servidor_list">
+      <field name="name">Servidores</field>
+      <field name="model">gtw.servidor</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="descricao"/>
+          <field name="ip_servidor"/>
+          <field name="endereco_dominio"/>
+          <field name="ativo"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Form -->
+    <record model="ir.ui.view" id="gtw_servidor_form">
+      <field name="name">Servidores</field>
+      <field name="model">gtw.servidor</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="descricao"/>
+                <field name="ativo"/>
+              </group>
+              <group>
+                <field name="ip_servidor" attrs="{
+                    'required': ['|',('endereco_dominio','=',False),('endereco_dominio','=','')],
+                    'readonly': [('id','!=',False)]
+                }"/>
+                <field name="endereco_dominio" attrs="{
+                  'required': ['|',('ip_servidor','=',False),('ip_servidor','=','')],
+                  'readonly': [('id','!=',False)]
+                }"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="gtw_servidor_action">
+      <field name="name">Servidores</field>
+      <field name="res_model">gtw.servidor</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Topo -->
+    <menuitem name="Sismais Gateway Manager" id="sismais_gateway_manager.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="Servidores" id="sismais_gateway_manager.menu_1" parent="sismais_gateway_manager.menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="Listar" id="sismais_gateway_manager.menu_1_list" parent="sismais_gateway_manager.menu_1"
+              action="gtw_servidor_action"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,76 @@
+<odoo>
+  <data>
+
+    <!-- Lista -->
+    <record model="ir.ui.view" id="gtw_subdominio_list">
+      <field name="name">Subdomínio</field>
+      <field name="model">gtw.subdominio</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id_pessoa"/>
+          <field name="subdominio"/>
+          <field name="id_gtw_dominio"/>
+          <field name="ativo"/>
+          <field name="tipo_apontamento_dns"/>
+          <field name="id_gtw_servidor_destino"/>
+          <field name="observacao"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Formulário -->
+    <record model="ir.ui.view" id="gtw_subdominio_form">
+      <field name="name">Subdomínio</field>
+      <field name="model">gtw.subdominio</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group string="Subdomínio">
+              <group>
+                <field name="id_gtw_dominio" attrs="{'readonly':[('id','!=',False)]}"/>
+                <field name="subdominio"/> <!--attrs="{'readonly':[('id','!=',False)]}"-->
+                <field name="tipo_apontamento_dns" attrs="{'readonly':[('id','!=',False)]}"/>
+              </group>
+              <group>
+                <field name="ativo"/>
+                <field name="id_pessoa" attrs="{'readonly':[('id','!=',False)]}"/>
+                <field name="id_gtw_servidor_destino" attrs="{'readonly':[('id','!=',False)]}"/>
+              </group>              
+            </group>
+            <group>
+              <field name="observacao"/>             
+            </group>
+            <!--<group string="Histórico">
+              <group>
+                <group col="12">
+                  <field name="create_uid" string="Inclusão" colspan="6"/>
+                  <field name="create_date" nolabel="1" colspan="6"/>
+                </group>
+                <group col="12">
+                  <field name="write_uid" string="Alteração" colspan="6"/>
+                  <field name="write_date" nolabel="1" colspan="6"/>
+                </group>
+              </group>
+            </group>-->
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- Ações -->
+    <record model="ir.actions.act_window" id="gtw_subdominio_action">
+      <field name="name">Subdomínio</field>
+      <field name="res_model">gtw.subdominio</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu de categorias -->
+    <menuitem name="Subdomínios" id="sismais_gateway_manager.menu_3" parent="sismais_gateway_manager.menu_root"/>
+
+    <!-- Ações -->
+    <menuitem name="Listar" id="sismais_gateway_manager.menu_3_list" parent="sismais_gateway_manager.menu_3"
+              action="gtw_subdominio_action"/>
+
+  </data>
+</odoo>

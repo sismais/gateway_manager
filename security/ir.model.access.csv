@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gtw_subdominio,gtw.subdominio,model_gtw_subdominio,,1,1,1,1
+access_gtw_dominio,gtw.dominio,model_gtw_dominio,,1,1,1,1
+access_gtw_vpn,gtw.vpn,model_gtw_vpn,,1,1,1,1
+access_gtw_servidor,gtw.servidor,model_gtw_servidor,,1,1,1,1
+access_gtw_rota,gtw.rota,model_gtw_rota,,1,1,1,1
+access_gtw_api,gtw.api,model_gtw_api,,1,1,1,1
