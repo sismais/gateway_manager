@@ -93,8 +93,6 @@ class GtwSubdominio(models.Model):
                 data=data_update
             )
             if response.status_code == 200:
-                for element in self.id_gtw_rota:
-                    print(element)
                 return super(GtwSubdominio, self).write(vals_list)
             else:
                 raise Exception(response.json())
