@@ -34,7 +34,7 @@
               </group>
               <group>
                 <field name="ativo"/>
-                <field name="id_pessoa" attrs="{'readonly':[('id','!=',False)]}"/>
+                <field name="id_pessoa"/> <!--attrs="{'readonly':[('id','!=',False)]}"-->
                 <field name="id_gtw_servidor_destino" attrs="{'readonly':[('id','!=',False)]}"/>
               </group>              
             </group>
