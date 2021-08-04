@@ -7,11 +7,13 @@
       <field name="model">gtw.vpn</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="id_gtw_subdominio" attrs="{'readonly':[('id','!=',False)]}"/>
           <field name="descricao"/>
+          <field name="id_pessoa"/>
           <field name="nome_client_vpn" readonly="1"/>
           <field name="ip_vpn" readonly="1"/>
-          <button name="download_vpn_file" type="object" class="oe_highlight btn btn-primary" icon="fa-download"/>
+          <!--<field name="id_gtw_subdominio" attrs="{'readonly':[('id','!=',False)]}"/>-->
+          <button name="download_vpn_file" type="object" class="oe_highlight btn btn-primary" icon="fa-download" string="Baixar"/>
+          <button name="ping" type="object" class="oe_highlight btn btn-primary" icon="fa-info" string="Ping"/>
         </tree>
       </field>
     </record>
@@ -25,16 +27,20 @@
           <sheet>
             <group>
               <group>
-                <field name="id_gtw_subdominio"/>
                 <field name="nome_client_vpn" readonly="1"/>
+                <field name="ip_vpn" readonly="1"/>
               </group>
               <group>
                 <field name="descricao"/>
-                <field name="ip_vpn" readonly="1"/>
+                <field name="id_pessoa" attrs="{'readonly':[('id','!=',False)]}"/>
               </group>              
             </group>
-            <notebook>
-              <page string="VPNs">
+            
+            <!--<notebook>
+              <page string="Subdomínios">
+                <field name="id_gtw_subdominio" options="{'no_create': True}"/>
+              </page>
+              <page string="Rotas">
                 <field name="id_gtw_rota" context="{
                   'default_id_gtw_subdominio':id_gtw_subdominio,
                   'default_id_gtw_vpn':id
@@ -48,11 +54,11 @@
                     <field name="descricao"/>
                     <field name="modo_nginx"/>
                     <field name="id_gtw_vpn"/>
-                    <button name="open_record" type="object" class="text-dark" icon="fa-align-justify"/>
+                    <button name="open_record" type="object" class="text-dark" icon="fa-align-justify" string="Baixar"/>
                   </tree>
                 </field>
               </page>
-            </notebook>
+            </notebook>-->
           </sheet>
         </form>
       </field>

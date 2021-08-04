@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-import requests
 from validators.domain import domain
 import socket
-from validators.utils import ValidationFailure
 from odoo.exceptions import UserError
 from odoo import models, fields, api
 

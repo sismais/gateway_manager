@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from requests import get
-from .api_sgm import ApiSGM
 from odoo.exceptions import UserError
 
 
@@ -9,21 +7,33 @@ class GtwRota(models.Model):
     _name = 'gtw.rota'
     _description = 'Rotas Sismais'
 
-    id_gtw_subdominio = fields.Many2one(comodel_name='gtw.subdominio', string='Subdomínio', required=True)
-    porta_origem_inicial = fields.Integer(string='Porta Origem Inicial', required=True)
-    porta_origem_final = fields.Integer(string='Porta Origem Final', required=True)
-    porta_destino_inicial = fields.Integer(string='Porta Destino Inicial', required=True)
-    porta_destino_final = fields.Integer(string='Porta Destino Final', required=True)
-    modo_nginx = fields.Selection(selection=[('1', 'Proxy Reverse')], string='Modo Nginx', required=True)
+    id_gtw_subdominio = fields.Many2one(
+        comodel_name='gtw.subdominio',
+        string='Subdomínio',
+        required=True
+    )
+    porta_origem_inicial = fields.Integer(
+        string='Porta Origem Inicial',
+        required=True,
+        default=80
+    )
+    porta_origem_final = fields.Integer(string='Porta Origem Final', required=True, default=80)
+    porta_destino_inicial = fields.Integer(string='Porta Destino Inicial', required=True, default=80)
+    porta_destino_final = fields.Integer(string='Porta Destino Final', required=True, default=80)
+    modo_nginx = fields.Selection(selection=[('1', 'Proxy Reverse')], string='Modo Nginx', required=True, default='1')
     descricao = fields.Char(string='Descrição', required=True)
-    id_gtw_vpn = fields.Many2one(comodel_name='gtw.vpn', string='VPN Destino', required=True)
+    id_gtw_vpn = fields.Many2one(
+        comodel_name='gtw.vpn',
+        string='VPN Destino',
+        required=True
+    )
 
     @api.model
     def create(self, vals_list):
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
             rota = super(GtwRota, self).create(vals_list)
-            response = api_sgm.post(f'nginx/configs/', data={
+            response = gtw_api.post(f'nginx/configs/', data={
                 "id": rota.id,
                 "subdominio": rota.id_gtw_subdominio.subdominio,
                 "ip_vpn_cliente": rota.id_gtw_vpn.ip_vpn,
@@ -42,13 +52,13 @@ class GtwRota(models.Model):
 
     @api.model
     def unlink(self, list_ids):
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
             for id in list_ids:
                 obj = self.env['gtw.rota'].browse(id)
                 id_nginx = f'{obj.id}-{obj.id_gtw_subdominio.subdominio}-{obj.id_gtw_vpn.ip_vpn}'
                 id_nginx = id_nginx.replace('.', '@')
-                response = api_sgm.delete(f'nginx/configs/{id_nginx}')
+                response = gtw_api.delete(f'nginx/configs/{id_nginx}')
                 if response.status_code == 204:
                     super(GtwRota, obj).unlink()
                 else:

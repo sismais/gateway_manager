@@ -2,7 +2,6 @@
 import requests
 from odoo import models, fields, api
 from odoo.exceptions import AccessError
-from .api_sgm import ApiSGM
 
 
 class GtwDominio(models.Model):
@@ -18,9 +17,9 @@ class GtwDominio(models.Model):
 
     @api.model
     def create(self, vals_list):
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
-            response = api_sgm.post(
+            response = gtw_api.post(
                 endpoint='route53/hosted_zones/',
                 data={'name': vals_list['dominio'], 'comment': vals_list['observacao']}
             )
@@ -32,12 +31,12 @@ class GtwDominio(models.Model):
             raise AccessError("Erro ao registrar o domínio: " + e.__str__())        
 
     def unlink(self):
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
             subdominio_obj = self.env['gtw.subdominio']
             subdominio_ids = subdominio_obj.search([('id_gtw_dominio', '=', self.id)]).ids
             subdominio_obj.unlink(subdominio_ids)
-            response = api_sgm.delete(f'route53/hosted_zones/{self.id_dominio_route53}/')
+            response = gtw_api.delete(f'route53/hosted_zones/{self.id_dominio_route53}/')
             if response.status_code == 204:
                 return super(GtwDominio, self).unlink()
             raise Exception(response.json())

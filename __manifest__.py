@@ -27,7 +27,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/gtw_servidor.xml',
-        'views/gtw_dominio.xml',
+        # 'views/gtw_dominio.xml',
         'views/gtw_subdominio.xml',
         'views/gtw_vpn.xml',
         'views/gtw_rota.xml',

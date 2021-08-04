@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 import base64
 from odoo import models, fields, api
-from odoo.exceptions import UserError
-from .api_sgm import ApiSGM
-
+from odoo.exceptions import AccessError, RedirectWarning, UserError, ValidationError
 
 class GtwVpn(models.Model):
     _name = 'gtw.vpn'
     _description = 'VPN sismais'
     _rec_name = 'ip_vpn'
 
-    id_gtw_subdominio = fields.Many2one(
+    """id_gtw_subdominio = fields.Many2many(
         comodel_name="gtw.subdominio",
-        ondelete='cascade',
+        # ondelete='cascade',
         required=True,
         string="Subdomínio"
+    )"""
+    id_pessoa = fields.Many2one(
+        comodel_name='res.partner',
+        string='Cliente/Pessoa',
+        required=True
     )
     descricao = fields.Char(string='Descrição')
     nome_client_vpn = fields.Char(string='Nome Interno')
@@ -24,10 +27,10 @@ class GtwVpn(models.Model):
 
     @api.model
     def unlink(self, list):
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
             for obj_id in list:
-                response = api_sgm.delete(f'openvpn/vpns/{obj_id}')
+                response = gtw_api.delete(f'openvpn/vpns/{obj_id}')
                 if response.status_code == 204:
                     obj = self.env['gtw.vpn'].browse(obj_id)
                     super(GtwVpn, obj).unlink()
@@ -40,10 +43,10 @@ class GtwVpn(models.Model):
 
     @api.model
     def create(self, vals_list):
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
             vpn = super(GtwVpn, self).create(vals_list)
-            response = api_sgm.post(f'openvpn/vpns/', data={"id":vpn.id})
+            response = gtw_api.post(f'openvpn/vpns/', data={"id":vpn.id})
             if response.status_code == 201:
                 vpn.nome_client_vpn = response.json()['name']
                 vpn.ip_vpn = response.json()['ip']
@@ -55,9 +58,9 @@ class GtwVpn(models.Model):
 
     def download_vpn_file(self):
         """ Baixar o arquivo de configuração OVPN """
-        api_sgm = ApiSGM()
+        gtw_api = self.env['gtw.api']
         try:
-            response = api_sgm.get(f'openvpn/vpns/{self.id}/download_file/')
+            response = gtw_api.get(f'openvpn/vpns/{self.id}/download_file/')
             if response.status_code == 200:  
                 result = base64.b64encode(response.content)
                 attachment_obj = self.env['ir.attachment'] 
@@ -71,3 +74,13 @@ class GtwVpn(models.Model):
                 }
         except Exception as e:
             raise UserError("Erro ao tentar baixar o arquivo de configuração OVPN: " + e.__str__())
+
+    def ping(self):
+        gtw_api = self.env['gtw.api']
+        try:
+            response = gtw_api.get(f'openvpn/vpns/{self.id}/ping/')
+            if response.status_code != 200:
+                raise Exception(response.json())
+        except Exception as e:
+            raise AccessError(e.__str__().replace('\\n', '\n'))
+        raise RedirectWarning(message=response.json()['message'].__str__().replace('\\n', '\n'), action=self.env.ref('sismais_gateway_manager.gtw_vpn_list').id, button_text='OK')

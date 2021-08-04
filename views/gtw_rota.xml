@@ -6,7 +6,7 @@
       <field name="name">Rotas</field>
       <field name="model">gtw.rota</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree editable="bottom">
           <field name="id_gtw_subdominio"/>
           <field name="porta_origem_inicial"/>
           <field name="porta_origem_final"/>
@@ -15,7 +15,6 @@
           <field name="descricao"/>
           <field name="modo_nginx"/>
           <field name="id_gtw_vpn"/>
-          <button name="open_record" type="object" class="oe_highlight btn btn-primary" icon="fa-align-justify"/>
         </tree>
       </field>
     </record>
