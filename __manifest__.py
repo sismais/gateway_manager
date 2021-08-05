@@ -32,7 +32,6 @@
         'views/gtw_vpn.xml',
         'views/gtw_rota.xml',
         'views/gtw_api.xml',
-        # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'instalable': True,

@@ -53,11 +53,7 @@
     </record>
 
     <!-- menu categories -->
-    <menuitem name="Rotas" id="sismais_gateway_manager.menu_5" parent="sismais_gateway_manager.menu_root"/>
-
-    <!-- actions -->
-    <menuitem name="Listar" id="sismais_gateway_manager.menu_5_list" parent="sismais_gateway_manager.menu_5"
-              action="gtw_rota_action"/>
+    <menuitem name="Rotas" id="sismais_gateway_manager.menu_5" parent="sismais_gateway_manager.menu_root" action="gtw_rota_action"/>
 
   </data>
 </odoo>

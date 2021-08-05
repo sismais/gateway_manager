@@ -8,12 +8,6 @@ class GtwVpn(models.Model):
     _description = 'VPN sismais'
     _rec_name = 'ip_vpn'
 
-    """id_gtw_subdominio = fields.Many2many(
-        comodel_name="gtw.subdominio",
-        # ondelete='cascade',
-        required=True,
-        string="Subdomínio"
-    )"""
     id_pessoa = fields.Many2one(
         comodel_name='res.partner',
         string='Cliente/Pessoa',
@@ -22,8 +16,6 @@ class GtwVpn(models.Model):
     descricao = fields.Char(string='Descrição')
     nome_client_vpn = fields.Char(string='Nome Interno')
     ip_vpn = fields.Char(string='IP VPN')
-    id_gtw_rota = fields.One2many(comodel_name='gtw.rota', inverse_name='id_gtw_vpn', string='Rotas')
-    ovpn_binary = fields.Binary()
 
     @api.model
     def unlink(self, list):

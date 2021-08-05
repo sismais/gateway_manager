@@ -54,11 +54,7 @@
     </record>
 
     <!-- Menu de categorias -->
-    <menuitem name="Subdomínios" id="sismais_gateway_manager.menu_3" parent="sismais_gateway_manager.menu_root"/>
-
-    <!-- Ações -->
-    <menuitem name="Listar" id="sismais_gateway_manager.menu_3_list" parent="sismais_gateway_manager.menu_3"
-              action="gtw_subdominio_action"/>
+    <menuitem name="Subdomínios" id="sismais_gateway_manager.menu_3" parent="sismais_gateway_manager.menu_root" action="gtw_subdominio_action"/>
 
   </data>
 </odoo>

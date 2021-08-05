@@ -47,11 +47,7 @@
     </record>
 
     <!-- Menu de categorias -->
-    <menuitem name="Domínios" id="sismais_gateway_manager.menu_2" parent="sismais_gateway_manager.menu_root"/>
-
-    <!-- Ações -->
-    <menuitem name="Listar" id="sismais_gateway_manager.menu_2_list" parent="sismais_gateway_manager.menu_2"
-              action="gtw_dominio_action"/>
+    <menuitem name="Domínios" id="sismais_gateway_manager.menu_2" parent="sismais_gateway_manager.menu_root" action="gtw_dominio_action"/>
 
   </data>
 </odoo>

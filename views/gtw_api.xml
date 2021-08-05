@@ -23,12 +23,7 @@
 
     <!-- menu categories -->
 
-    <menuitem name="Parâmetros API" id="sismais_gateway_manager.menu_6" parent="sismais_gateway_manager.menu_root"/>
-
-    <!-- actions -->
-
-    <menuitem name="Listar" id="sismais_gateway_manager.menu_6_list" parent="sismais_gateway_manager.menu_6"
-              action="gtw_api_action"/>
+    <menuitem name="Parâmetros API" id="sismais_gateway_manager.menu_6" parent="sismais_gateway_manager.menu_root" action="gtw_api_action"/>
 
   </data>
 </odoo>
