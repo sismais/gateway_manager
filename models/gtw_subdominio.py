@@ -39,10 +39,6 @@ class GtwSubdominio(models.Model):
         domain="[('ativo', '=', True)]",
         required=True
     )
-    """id_gtw_vpn = fields.Many2many(
-        comodel_name='gtw.vpn',
-        string='VPNs'
-    )"""
     observacao = fields.Text(string='Observação')
 
     @api.model
@@ -109,9 +105,6 @@ class GtwSubdominio(models.Model):
         try:
             for obj_id in list_ids:
                 obj = self.env['gtw.subdominio'].browse(obj_id)
-                vpn_obj = self.env['gtw.vpn']
-                vpn_ids = vpn_obj.search([('id_gtw_subdominio', '=', obj.id)]).ids
-                vpn_obj.unlink(vpn_ids)
                 response = gtw_api.delete(
                     f"route53/hosted_zones/{obj.id_gtw_dominio.id_dominio_route53}" \
                     f"/record_sets/{obj.subdominio.replace('.', '@')}/"
